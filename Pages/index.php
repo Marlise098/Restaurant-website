@@ -7,6 +7,11 @@
     <title>Restaurant HomePage</title>
 </head>
 <body>
+
+   <?php
+      // Include the database connection file
+      include 'includes/dbh.inc.php';
+      ?>
     <!-- Include the header.php file -->
     <?php
       include 'header.php';
