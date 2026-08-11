@@ -7,8 +7,13 @@
     <title>Restaurant HomePage</title>
 </head>
 <body>
+    <!-- Include the header.php file -->
     <?php
-      echo "<h1>Welcome to our Restaurant!</h1>";
+      include 'header.php';
+    ?>
+    <!-- Include the hero.php file -->
+    <?php
+      include 'hero.php';
     ?>
 </body>
 </html>
