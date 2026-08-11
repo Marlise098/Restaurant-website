@@ -15,5 +15,10 @@
     <?php
       include 'hero.php';
     ?>
+
+    <!-- Include the menu.php file -->
+    <?php
+      include 'menu.php';
+    ?>
 </body>
 </html>
