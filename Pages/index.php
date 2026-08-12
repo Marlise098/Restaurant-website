@@ -25,5 +25,9 @@
     <?php
       include 'menu.php';
     ?>
+    <!-- Include the about.php file -->
 </body>
+
+ <script src="../js/script.js"></script>
+
 </html>

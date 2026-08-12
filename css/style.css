@@ -195,6 +195,32 @@ body {
     font-size: 1rem;
 }
 
+.filter-btn {
+    background-color: #0D0D0D;
+    color: #7A8065;
+    border: 1px solid #0D0D0D;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease,
+        border-color 0.3s ease;
+}
+
+.menu-filter {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.active,.filter-btn:hover {
+    background-color: #7A8065;
+    color: #0D0D0D;
+    border-color: #7A8065;
+    font-weight: bold;
+    font-family: Arial, elegant-serif;
+    text-decoration-line: underline;
+}
 
 
 @media (max-width: 900px) {

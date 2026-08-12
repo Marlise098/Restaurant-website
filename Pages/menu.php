@@ -20,11 +20,18 @@ $menuItems = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </p>
     </div>
 
+    <div class="menu-filter">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="Nigiri">Nigiri</button>
+        <button class="filter-btn" data-filter="Sashimi">Sashimi</button>
+        <button class="filter-btn" data-filter="Sushi">Signature Rolls</button>
+    </div>
+
     <div class="menu-grid">
     
         <?php foreach ($menuItems as $item): ?>
 
-            <div class ="menu-card">
+            <div class ="menu-card" data-category="<?= htmlspecialchars($item['category']) ?>">
 
                <img 
                  src="../images/<?= htmlspecialchars($item['image']) ?>"
