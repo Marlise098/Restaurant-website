@@ -8,10 +8,11 @@
 </head>
 <body>
 
-   <?php
-      // Include the database connection file
-      include 'includes/dbh.inc.php';
-      ?>
+ <?php
+require_once __DIR__ . '/includes/dbh.inc.php';
+
+var_dump($pdo);
+?>
     <!-- Include the header.php file -->
     <?php
       include 'header.php';
@@ -25,7 +26,6 @@
     <?php
       include 'menu.php';
     ?>
-    <!-- Include the about.php file -->
 </body>
 
  <script src="../js/script.js"></script>
