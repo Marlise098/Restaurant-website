@@ -9,9 +9,9 @@
 <body>
 
  <?php
-require_once __DIR__ . '/includes/dbh.inc.php';
-
-var_dump($pdo);
+  
+    // Include the database connection file
+    include 'includes/dbh.inc.php';
 ?>
     <!-- Include the header.php file -->
     <?php
@@ -25,6 +25,11 @@ var_dump($pdo);
     <!-- Include the menu.php file -->
     <?php
       include 'menu.php';
+    ?>
+
+    <!-- Include the about.php file -->
+    <?php
+      include 'about.php';
     ?>
 </body>
 
