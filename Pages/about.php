@@ -1,9 +1,28 @@
-<div class="about-section">
-    <div class="about-content fade-in">
-        <img src="../images/Sushi-about.jpg" alt="About Us" class="Sushi-about">
-        <h2>About Us</h2>
+<section class="about-section" id="about">
+
+    <img 
+        class="Sushi-about"
+        src="../images/Sushi-about.jpg"
+        alt="Sushi at KŌI"
+    >
+
+    <div class="about-content">
+
+        <p class="about-label">THE KŌI PHILOSOPHY</p>
+
+        <h2>A TASTE OF JAPAN</h2>
+
         <p>
-            Welcome to our Japanese restaurant, where we bring the authentic flavors of Japan to your table. Our chefs are passionate about creating traditional dishes with a modern twist, using only the freshest ingredients. From sushi and sashimi to ramen and tempura, we offer a wide variety of options to satisfy every palate. Join us for an unforgettable dining experience that will transport you straight to Japan.
+            At KŌI, we believe sushi is more than food.
+            It is a balance between tradition, craftsmanship
+            and simplicity.
         </p>
+
+        <p>
+            Every dish is carefully prepared using thoughtfully
+            selected ingredients and traditional Japanese techniques.
+        </p>
+
     </div>
-</div>
+
+</section>
