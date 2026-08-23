@@ -31,6 +31,11 @@
     <?php
       include 'about.php';
     ?>
+
+    <!-- Include the reservation.php file -->
+    <?php
+      include 'reservation.php';
+    ?>
 </body>
 
  <script src="../js/script.js"></script>
