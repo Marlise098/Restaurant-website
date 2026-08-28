@@ -1,4 +1,5 @@
 <div class="reservation-form"><form method="POST">
+    <input type="hidden" name="form_type" value="reservation">
 
     <div class="form-group">
         <input type="text" name="name" placeholder="Name" required>
@@ -39,7 +40,7 @@
 require_once "includes/dbh.inc.php";
 $message = "";
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["form_type"]) && $_POST["form_type"] === "reservation") {
 
     $name = $_POST["name"];
     $email = $_POST["email"];

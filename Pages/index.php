@@ -36,6 +36,11 @@
     <?php
       include 'reservation.php';
     ?>
+
+    <!-- Include the contact.php file -->
+    <?php
+      include 'contact.php';
+    ?>
 </body>
 
  <script src="../js/script.js"></script>
