@@ -1,8 +1,8 @@
 <?php
 
- $dsn = "mysql:host=u250404.gluwebsite.nl;dbname=u250404_gluwebsite";
+ $dsn = "mysql:host=localhost;dbname=u250404_gluwebsite";
  $dbusername = "u250404_gluwebsite";
- $dbpassword = "";
+ $dbpassword = "R@@mweg3";
 
  try {
    $pdo = new PDO($dsn, $dbusername, $dbpassword);
