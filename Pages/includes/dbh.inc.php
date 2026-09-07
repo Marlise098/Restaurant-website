@@ -1,7 +1,7 @@
 <?php
 
- $dsn = "mysql:host=localhost;dbname=restaurant_menu";
- $dbusername = "root";
+ $dsn = "mysql:host=u250404.gluwebsite.nl;dbname=u250404_gluwebsite";
+ $dbusername = "u250404_gluwebsite";
  $dbpassword = "";
 
  try {
