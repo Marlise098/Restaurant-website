@@ -41,6 +41,11 @@
     <?php
       include 'contact.php';
     ?>
+
+    <!-- Include the footer.php file -->
+    <?php
+      include 'footer.php';
+    ?>
 </body>
 
  <script src="../js/script.js"></script>

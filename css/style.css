@@ -518,6 +518,15 @@ body {
     font-size: 15px;
 }
 
+.footer {
+    background-color: #0D0D0D;
+    color: #F4F0E8;
+    text-align: center;
+    padding: 20px 0;
+    font-family: Arial, elegant-serif;
+    font-size: 14px;
+}
+
 
 @media (max-width: 600px) {
 
