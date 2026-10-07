@@ -30,9 +30,10 @@
         <textarea name="message" placeholder="Message"></textarea>
     </div>
 
-   <div class="submit-btn"> <button type="submit">Reserve</button>
-
-</form>
+    <div class="submit-btn">
+        <button type="submit">Reserve</button>
+    </div>
+    </form>
 </div>
 
 <?php

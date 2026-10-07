@@ -1,5 +1,7 @@
 <?php
 
+require_once "includes/dbh.inc.php";
+
 $stmt = $pdo->query("
     SELECT *
     FROM menu
