@@ -12,6 +12,12 @@ if ($isDocker) {
     $dbname = 'reservations';
     $username = 'root';
     $password = 'root';
+} elseif (PHP_OS_FAMILY === 'Windows') {
+    // Lokaal in XAMPP
+    $host = 'localhost';
+    $dbname = 'reservations';
+    $username = 'root';
+    $password = 'root';
 } else {
     // Live hosting
     $host = 'localhost'; 

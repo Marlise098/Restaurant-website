@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["form_type"]) && $_POS
     $email = $_POST["email"];
     $message = $_POST["message"];
 
-    $sql = "INSERT INTO Contact (name, email, message)
+    $sql = "INSERT INTO contact (name, email, message)
             VALUES (:name, :email, :message)";
 
     $stmt = $pdo->prepare($sql);
@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["form_type"]) && $_POS
 <div class="contact">
 
     <form method="POST">
-        <input type="hidden" name="form_type" value="Contact">
+        <input type="hidden" name="form_type" value="contact">
 
         <h2>Contact Us</h2>
 
