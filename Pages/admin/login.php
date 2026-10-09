@@ -51,7 +51,7 @@ $adminCount = (int) $pdo->query('SELECT COUNT(*) FROM admin_users')->fetchColumn
             <button class="admin-button" type="submit">Sign in</button>
         </form>
         <?php if ($adminCount === 0): ?>
-            <p class="admin-auth-switch">First time here? <a href="register.php">Create the first admin account</a></p>
+            <p class="admin-auth-switch">First time here? <a href="register.php">Create Your New Account</a></p>
         <?php endif; ?>
     </main>
 </body>
