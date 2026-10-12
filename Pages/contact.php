@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["form_type"]) && $_POS
 }
 ?>
 
-<div class="contact">
+<div class="contact" id="contact">
 
     <form method="POST">
         <input type="hidden" name="form_type" value="contact">

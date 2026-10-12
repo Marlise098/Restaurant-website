@@ -1,4 +1,4 @@
-<div class="reservation-form"><form method="POST">
+<div class="reservation-form" id="reservation"><form method="POST">
     <input type="hidden" name="form_type" value="reservation">
 
     <div class="form-group">

@@ -5,7 +5,7 @@
     font-family: Arial, sans-serif;
 }
 
-.admin-topbar {
+.admin-header {
     min-height: 76px;
     display: flex;
     align-items: center;
@@ -355,7 +355,7 @@
 }
 
 @media (max-width: 760px) {
-    .admin-topbar {
+    .admin-header {
         flex-wrap: wrap;
         gap: 14px 22px;
         padding: 16px 5vw;

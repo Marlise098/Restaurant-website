@@ -14,7 +14,7 @@ $pageTitle = $pageTitle ?? 'Admin';
     <title><?= admin_escape($pageTitle) ?> | KŌI Admin</title>
 </head>
 <body class="admin-body">
-    <header class="admin-topbar">
+    <header class="admin-header">
         <a class="admin-brand" href="admin.php">KŌI <span>ADMIN</span></a>
         <nav class="admin-nav" aria-label="Admin navigation">
             <a class="is-active" href="admin.php">Overview</a>

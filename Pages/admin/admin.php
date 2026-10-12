@@ -1,10 +1,12 @@
 <?php
 // Authentication
 require_once __DIR__ . '/admin-auth.php';
+require_once __DIR__ . '/../includes/upload.inc.php';
 admin_require_login();
 
 $error = '';
 $editItem = null;
+$editingReservation = null;
 
 //  Process submitted forms
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -25,43 +27,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 // Upload a new image
                 if (isset($_FILES['image_file']) && $_FILES['image_file']['error'] !== UPLOAD_ERR_NO_FILE) {
-                    if ($_FILES['image_file']['error'] !== UPLOAD_ERR_OK) {
-                        $error = 'The uploaded image could not be processed. Please try again.';
-                        $editItem = $_POST;
+                    $uploadResult = admin_upload_image($_FILES['image_file']);
+                    if ($uploadResult['image'] !== '') {
+                        $image = $uploadResult['image'];
                     } else {
-                        $uploadDir = dirname(__DIR__) . '/images';
-                        if (!is_dir($uploadDir)) {
-                            mkdir($uploadDir, 0777, true);
-                        }
-
-                        $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
-                        $fileMimeType = @mime_content_type($_FILES['image_file']['tmp_name']) ?: '';
-                        if (!in_array($fileMimeType, $allowedMimeTypes, true)) {
-                            $error = 'Please upload a valid image file (JPG, PNG, WEBP, or GIF).';
-                            $editItem = $_POST;
-                        } else {
-                            $originalName = pathinfo($_FILES['image_file']['name'], PATHINFO_FILENAME);
-                            $safeBaseName = preg_replace('/[^A-Za-z0-9_-]+/', '-', $originalName);
-                            $safeBaseName = trim((string) $safeBaseName, '-');
-                            $safeBaseName = $safeBaseName !== '' ? $safeBaseName : 'dish';
-                            $extension = strtolower(pathinfo($_FILES['image_file']['name'], PATHINFO_EXTENSION));
-                            if ($extension === '') {
-                                $extension = match ($fileMimeType) {
-                                    'image/jpeg' => 'jpg',
-                                    'image/png' => 'png',
-                                    'image/webp' => 'webp',
-                                    'image/gif' => 'gif',
-                                    default => 'jpg',
-                                };
-                            }
-
-                            $image = $safeBaseName . '-' . time() . '.' . $extension;
-                            $targetPath = $uploadDir . '/' . $image;
-                            if (!move_uploaded_file($_FILES['image_file']['tmp_name'], $targetPath)) {
-                                $error = 'The image upload failed. Please try again.';
-                                $editItem = $_POST;
-                            }
-                        }
+                        $error = $uploadResult['error'];
+                        $editItem = $_POST;
                     }
                 }
 
@@ -100,6 +71,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     header('Location: admin.php#menu');
                     exit;
                 }
+            } elseif ($action === 'save_reservation' && $id > 0) {
+                $name = trim((string) ($_POST['name'] ?? ''));
+                $email = trim((string) ($_POST['email'] ?? ''));
+                $phone = trim((string) ($_POST['phone'] ?? ''));
+                $reservationDate = trim((string) ($_POST['reservation_date'] ?? ''));
+                $reservationTime = trim((string) ($_POST['reservation_time'] ?? ''));
+                $guests = filter_var($_POST['guests'] ?? null, FILTER_VALIDATE_INT);
+                $message = trim((string) ($_POST['message'] ?? ''));
+
+                if ($name === '' || $email === '' || $phone === '' || $reservationDate === '' || $reservationTime === '' || $guests === false || $guests < 1) {
+                    $error = 'Please complete all reservation fields before saving.';
+                    $editingReservation = $_POST;
+                    $editingReservation['id'] = $id;
+                } else {
+                    $stmt = $pdo->prepare('UPDATE reservations SET name = :name, email = :email, phone = :phone, reservation_date = :reservation_date, reservation_time = :reservation_time, guests = :guests, message = :message WHERE id = :id');
+                    $stmt->execute([
+                        'name' => $name,
+                        'email' => $email,
+                        'phone' => $phone,
+                        'reservation_date' => $reservationDate,
+                        'reservation_time' => $reservationTime,
+                        'guests' => $guests,
+                        'message' => $message,
+                        'id' => $id,
+                    ]);
+
+                    header('Location: admin.php#reservations');
+                    exit;
+                }
             } elseif ($action === 'delete_menu' && $id > 0) {
                 $stmt = $pdo->prepare('DELETE FROM menu WHERE id = :id');
                 $stmt->execute(['id' => $id]);
@@ -115,6 +115,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt->execute(['id' => $id]);
                 header('Location: admin.php#reservations');
                 exit;
+            } elseif ($action === 'edit_reservation' && $id > 0) {
+                $stmt = $pdo->prepare('SELECT id, name, email, phone, reservation_date, reservation_time, guests, message FROM reservations WHERE id = :id');
+                $stmt->execute(['id' => $id]);
+                $editingReservation = $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+
+                if (!$editingReservation) {
+                    $error = 'Reservation not found.';
+                }
             }
         } catch (PDOException $exception) {
             error_log($exception->getMessage());
@@ -355,6 +363,49 @@ require __DIR__ . '/admin-header.php';
         Reservations
         <span class="admin-count"><?= count($reservations) ?> total</span>
     </h2>
+
+    <?php if ($editingReservation): ?>
+        <form method="post" action="admin.php#reservations" class="admin-form">
+            <input type="hidden" name="csrf_token" value="<?= admin_escape(admin_csrf_token()) ?>">
+            <input type="hidden" name="action" value="save_reservation">
+            <input type="hidden" name="id" value="<?= (int) ($editingReservation['id'] ?? 0) ?>">
+
+            <label>
+                Guest name
+                <input type="text" name="name" value="<?= admin_escape($editingReservation['name'] ?? '') ?>" required>
+            </label>
+            <label>
+                Email
+                <input type="email" name="email" value="<?= admin_escape($editingReservation['email'] ?? '') ?>" required>
+            </label>
+            <label>
+                Phone
+                <input type="tel" name="phone" value="<?= admin_escape($editingReservation['phone'] ?? '') ?>" required>
+            </label>
+            <label>
+                Reservation date
+                <input type="date" name="reservation_date" value="<?= admin_escape($editingReservation['reservation_date'] ?? '') ?>" required>
+            </label>
+            <label>
+                Reservation time
+                <input type="time" name="reservation_time" value="<?= admin_escape($editingReservation['reservation_time'] ?? '') ?>" required>
+            </label>
+            <label>
+                Guests
+                <input type="number" name="guests" min="1" max="20" value="<?= (int) ($editingReservation['guests'] ?? 1) ?>" required>
+            </label>
+            <label class="admin-field-wide">
+                Message
+                <textarea name="message" rows="3"><?= admin_escape($editingReservation['message'] ?? '') ?></textarea>
+            </label>
+
+            <div class="admin-form-actions">
+                <button class="admin-button" type="submit">Save reservation</button>
+                <a class="admin-text-link" href="admin.php#reservations">Cancel</a>
+            </div>
+        </form>
+    <?php endif; ?>
+
     <div class="admin-table-wrap">
         <table class="admin-table">
             <thead>
@@ -405,6 +456,14 @@ require __DIR__ . '/admin-header.php';
                                 <input type="hidden" name="id" value="<?= (int) $reservation['id'] ?>">
                                 <button class="admin-danger-link" type="submit">
                                     Delete
+                                </button>
+                            </form>
+                            <form method="post" action="admin.php#reservations">
+                                <input type="hidden" name="csrf_token" value="<?= admin_escape(admin_csrf_token()) ?>">
+                                <input type="hidden" name="action" value="edit_reservation">
+                                <input type="hidden" name="id" value="<?= (int) $reservation['id'] ?>">
+                                <button class="admin-text-link" type="submit" style="padding:0; border:0; background:none; font:inherit; cursor:pointer;">
+                                    Edit
                                 </button>
                             </form>
                         </td>
