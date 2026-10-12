@@ -19,33 +19,84 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $name = trim((string) ($_POST['name'] ?? ''));
                 $description = trim((string) ($_POST['description'] ?? ''));
                 $category = trim((string) ($_POST['category'] ?? ''));
-                $image = trim((string) ($_POST['image'] ?? ''));
                 $price = filter_var($_POST['price'] ?? null, FILTER_VALIDATE_FLOAT);
+                $image = trim((string) ($_POST['existing_image'] ?? ''));
 
-                if ($name === '' || $category === '' || $image === '' || $price === false || $price < 0) {
-                    $error = 'Enter a name, category, image filename, and valid price.';
+                if (isset($_FILES['image_file']) && $_FILES['image_file']['error'] !== UPLOAD_ERR_NO_FILE) {
+                    if ($_FILES['image_file']['error'] !== UPLOAD_ERR_OK) {
+                        $error = 'The uploaded image could not be processed. Please try again.';
+                        $editItem = $_POST;
+                    } else {
+                        $uploadDir = dirname(__DIR__) . '/images';
+                        if (!is_dir($uploadDir)) {
+                            mkdir($uploadDir, 0777, true);
+                        }
+
+                        $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+                        $fileMimeType = @mime_content_type($_FILES['image_file']['tmp_name']) ?: '';
+                        if (!in_array($fileMimeType, $allowedMimeTypes, true)) {
+                            $error = 'Please upload a valid image file (JPG, PNG, WEBP, or GIF).';
+                            $editItem = $_POST;
+                        } else {
+                            $originalName = pathinfo($_FILES['image_file']['name'], PATHINFO_FILENAME);
+                            $safeBaseName = preg_replace('/[^A-Za-z0-9_-]+/', '-', $originalName);
+                            $safeBaseName = trim((string) $safeBaseName, '-');
+                            $safeBaseName = $safeBaseName !== '' ? $safeBaseName : 'dish';
+                            $extension = strtolower(pathinfo($_FILES['image_file']['name'], PATHINFO_EXTENSION));
+                            if ($extension === '') {
+                                $extension = match ($fileMimeType) {
+                                    'image/jpeg' => 'jpg',
+                                    'image/png' => 'png',
+                                    'image/webp' => 'webp',
+                                    'image/gif' => 'gif',
+                                    default => 'jpg',
+                                };
+                            }
+
+                            $image = $safeBaseName . '-' . time() . '.' . $extension;
+                            $targetPath = $uploadDir . '/' . $image;
+                            if (!move_uploaded_file($_FILES['image_file']['tmp_name'], $targetPath)) {
+                                $error = 'The image upload failed. Please try again.';
+                                $editItem = $_POST;
+                            }
+                        }
+                    }
+                }
+
+                if ($error === '' && ($name === '' || $category === '' || $image === '' || $price === false || $price < 0)) {
+                    $error = 'Enter a name, category, dish image, and valid price.';
                     $editItem = $_POST;
                 } else {
-                    $values = [
-                        'name' => $name,
-                        'description' => $description,
-                        'category' => $category,
-                        'price' => $price,
-                        'image' => basename($image),
-                        'available' => isset($_POST['available']) ? 1 : 0,
-                    ];
+                    if ($error === '') {
+                        $values = [
+                            'name' => $name,
+                            'description' => $description,
+                            'category' => $category,
+                            'price' => $price,
+                            'image' => basename($image),
+                            'available' => isset($_POST['available']) ? 1 : 0,
+                        ];
 
-                    if ($id > 0) {
-                        $values['id'] = $id;
-                        $stmt = $pdo->prepare('UPDATE menu SET name = :name, description = :description, category = :category, price = :price, image = :image, available = :available WHERE id = :id');
-                        $stmt->execute($values);
-                    } else {
-                        $stmt = $pdo->prepare('INSERT INTO menu (name, description, category, price, image, available) VALUES (:name, :description, :category, :price, :image, :available)');
-                        $stmt->execute($values);
+                        if ($id > 0) {
+                            $currentImage = trim((string) ($_POST['existing_image'] ?? ''));
+                            if ($currentImage !== '' && $currentImage !== $values['image']) {
+                                $oldImagePath = dirname(__DIR__) . '/images/' . $currentImage;
+                                if (file_exists($oldImagePath)) {
+                                    unlink($oldImagePath);
+                                }
+                            }
+
+                            $values['id'] = $id;
+                            $stmt = $pdo->prepare('UPDATE menu SET name = :name, description = :description, category = :category, price = :price, image = :image, available = :available WHERE id = :id');
+                            $stmt->execute($values);
+                        } else {
+                            $stmt = $pdo->prepare('INSERT INTO menu (name, description, category, price, image, available) VALUES (:name, :description, :category, :price, :image, :available)');
+                            $stmt->execute($values);
+                        }
+
+                        header('Location: admin.php#menu');
+                        exit;
                     }
-
-                    header('Location: admin.php#menu');
-                    exit;
                 }
             } elseif ($action === 'delete_menu' && $id > 0) {
                 $stmt = $pdo->prepare('DELETE FROM menu WHERE id = :id');
@@ -140,10 +191,11 @@ require __DIR__ . '/admin-header.php';
         Menu
         <span class="admin-count"><?= count($menuItems) ?> items</span>
     </h2>
-    <form method="post" action="admin.php#menu" class="admin-form admin-menu-form">
+    <form method="post" action="admin.php#menu" class="admin-form admin-menu-form" enctype="multipart/form-data">
         <input type="hidden" name="csrf_token" value="<?= admin_escape(admin_csrf_token()) ?>">
         <input type="hidden" name="action" value="save_menu">
         <input type="hidden" name="id" value="<?= admin_escape($editItem['id'] ?? '') ?>">
+        <input type="hidden" name="existing_image" value="<?= admin_escape($editItem['image'] ?? '') ?>">
         <label>
             Dish name
             <input name="name" value="<?= admin_escape($editItem['name'] ?? '') ?>" required>
@@ -157,8 +209,11 @@ require __DIR__ . '/admin-header.php';
             <input type="number" name="price" min="0" step="0.01" value="<?= admin_escape($editItem['price'] ?? '') ?>" required>
         </label>
         <label>
-            Image filename
-            <input name="image" value="<?= admin_escape($editItem['image'] ?? '') ?>" placeholder="dish.jpg" required>
+            Dish image
+            <input type="file" name="image_file" accept="image/*" <?= $editItem ? '' : 'required' ?>>
+            <?php if (!empty($editItem['image'])): ?>
+                <small>Current file: <?= admin_escape($editItem['image']) ?></small>
+            <?php endif; ?>
         </label>
         <label class="admin-field-wide">
             Description

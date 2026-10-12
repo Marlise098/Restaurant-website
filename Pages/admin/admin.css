@@ -1,6 +1,6 @@
 .admin-body {
     min-height: 100vh;
-    background: #f2f1ed;
+    background: #F4F0E8;
     color: #20231f;
     font-family: Arial, sans-serif;
 }
@@ -11,21 +11,22 @@
     align-items: center;
     gap: 42px;
     padding: 0 5vw;
-    background: #151515;
+    background: #0D0D0D;
     color: #f4f0e8;
 }
 
 .admin-brand {
     color: #f4f0e8;
-    font-family: Georgia, serif;
+    font-family: Arial, sans-serif;
     font-size: 21px;
+    font-weight: bold;
     text-decoration: none;
     white-space: nowrap;
 }
 
 .admin-brand span {
     margin-left: 7px;
-    color: #b7c296;
+    color: #F4F0E8;
     font: 700 10px Arial, sans-serif;
     letter-spacing: 1px;
 }
@@ -127,7 +128,7 @@
 }
 
 .admin-stat:hover {
-    background: #e9eae3;
+    background: #F4F0E8;
 }
 
 .admin-stat span,
@@ -183,7 +184,7 @@
     padding: 10px 11px;
     border: 1px solid #cdd0c5;
     border-radius: 2px;
-    background: #fff;
+    background: #F4F0E8;
     color: #20231f;
     font: 14px Arial, sans-serif;
 }
@@ -329,7 +330,7 @@
     margin: max(9vh, 40px) auto;
     padding: 34px;
     border-top: 3px solid #687448;
-    background: #fff;
+    background: #F4F0E8;
 }
 
 .admin-auth-card .admin-brand {
