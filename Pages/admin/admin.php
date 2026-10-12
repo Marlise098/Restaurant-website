@@ -1,7 +1,7 @@
 <?php
 // Authentication
-require_once __DIR__ . '/admin-auth.php';
-require_once __DIR__ . '/../includes/upload.inc.php';
+require_once 'admin-auth.php';
+require_once '../includes/upload.inc.php';
 admin_require_login();
 
 $error = '';
