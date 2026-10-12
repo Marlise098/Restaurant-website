@@ -563,6 +563,7 @@ body {
         grid-column: 1;
     }
 
+
 }
 
 @media (max-width: 700px) {
@@ -624,6 +625,10 @@ body {
 
     .menu-header h2 {
         font-size: 2.3rem;
+    }
+
+    .header-content {
+       flex
     }
 
 }
