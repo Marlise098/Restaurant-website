@@ -6,7 +6,7 @@ admin_require_login();
 $error = '';
 $editItem = null;
 
-// 1. Process submitted forms
+//  Process submitted forms
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!admin_verify_csrf()) {
         $error = 'Your session expired. Please try again.';
@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $price = filter_var($_POST['price'] ?? null, FILTER_VALIDATE_FLOAT);
                 $image = trim((string) ($_POST['existing_image'] ?? ''));
 
-                // Upload a new image, if one was selected
+                // Upload a new image
                 if (isset($_FILES['image_file']) && $_FILES['image_file']['error'] !== UPLOAD_ERR_NO_FILE) {
                     if ($_FILES['image_file']['error'] !== UPLOAD_ERR_OK) {
                         $error = 'The uploaded image could not be processed. Please try again.';
@@ -40,7 +40,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             $error = 'Please upload a valid image file (JPG, PNG, WEBP, or GIF).';
                             $editItem = $_POST;
                         } else {
-                            // Create a filename for the uploaded image
                             $originalName = pathinfo($_FILES['image_file']['name'], PATHINFO_FILENAME);
                             $safeBaseName = preg_replace('/[^A-Za-z0-9_-]+/', '-', $originalName);
                             $safeBaseName = trim((string) $safeBaseName, '-');
@@ -66,13 +65,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                 }
 
-                // Check the required fields
                 if ($error === '' && ($name === '' || $category === '' || $image === '' || $price === false || $price < 0)) {
                     $error = 'Enter a name, category, dish image, and valid price.';
                     $editItem = $_POST;
                 }
 
-                // Save only when validation and the upload succeeded
                 if ($error === '') {
                     $values = [
                         'name' => $name,
@@ -84,7 +81,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     ];
 
                     if ($id > 0) {
-                        // Remove the previous image when it is replaced
                         $currentImage = trim((string) ($_POST['existing_image'] ?? ''));
                         if ($currentImage !== '' && $currentImage !== $values['image']) {
                             $oldImagePath = dirname(__DIR__) . '/images/' . $currentImage;
@@ -127,19 +123,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// 2. Load the dish selected for editing
 if ($editItem === null && isset($_GET['edit'])) {
     $stmt = $pdo->prepare('SELECT id, name, description, category, price, image, available FROM menu WHERE id = :id');
     $stmt->execute(['id' => (int) $_GET['edit']]);
     $editItem = $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
 }
 
-// 3. Load the dashboard tables
 $menuItems = $pdo->query('SELECT id, name, description, category, price, image, available FROM menu ORDER BY id DESC')->fetchAll(PDO::FETCH_ASSOC);
 $messages = $pdo->query('SELECT id, name, email, message FROM contact ORDER BY id DESC')->fetchAll(PDO::FETCH_ASSOC);
 $reservations = $pdo->query('SELECT id, name, email, phone, reservation_date, reservation_time, guests, message FROM reservations ORDER BY reservation_date DESC, reservation_time DESC')->fetchAll(PDO::FETCH_ASSOC);
 
-// 4. Display the admin page
+//  Display the admin page
 $activePage = 'dashboard';
 $pageTitle = 'Admin panel';
 require __DIR__ . '/admin-header.php';
