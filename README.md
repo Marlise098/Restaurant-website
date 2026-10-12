@@ -45,35 +45,6 @@ The website uses large food photography, generous spacing, subtle animations and
 * **Body:** Modern sans-serif
 * **Logo:** Custom typographic treatment of `KŌI`
 
----
-
-##  Pages
-
-### Home
-
-The main landing page introducing KŌI, its concept and signature dishes.
-
-### Menu
-
-A complete overview of the restaurant's sushi, sashimi, rolls and other dishes.
-
-### About
-
-Information about the restaurant, its philosophy and approach to Japanese cuisine.
-
-### Experience
-
-A closer look at the dining experience at KŌI.
-
-### Reservations
-
-A reservation form where customers can book a table.
-
-### Contact
-
-Restaurant location, opening hours and contact information.
-
----
 
 ##  Technologies
 
@@ -84,85 +55,6 @@ This project is built using:
 * JavaScript
 * PHP
 * MySQL
-
-Additional libraries and tools:
-
-* [Add your libraries here]
-* [Add frameworks here]
-* [Add APIs here]
-
----
-
-##  Project Structure
-
-Koi/
-│
-├── assets/
-│   ├── images/
-│   ├── icons/
-│   └── fonts/
-│
-├── css/
-│   └── style.css
-│
-├── js/
-│   └── script.js
-│
-├── php/
-│   └── ...
-│
-├── pages/
-│   ├── index.php
-│   ├── menu.php
-│   ├── about.php
-│   ├── experience.php
-│   ├── reservation.php
-│   └── contact.php
-│
-├── database/
-│   └── database.sql
-│
-└── README.md
-
-> Update the structure above to match the actual project structure.
-
----
-
-##  Database
-
-The website can use a MySQL database to store information such as:
-
-* Menu items
-* Categories
-* Reservations
-* Customer information
-* Users/admins
-
-Example database structure:
-
-users
-├── id
-├── name
-├── email
-└── password
-
-menu_items
-├── id
-├── name
-├── description
-├── price
-├── category_id
-└── image
-
-reservations
-├── id
-├── name
-├── email
-├── date
-├── time
-└── guests
-
----
 
 ##  Project Goals
 
@@ -178,20 +70,4 @@ The project focuses on:
 * Form validation
 * CRUD functionality
 
---
 
-KŌI
-│
-├── Frontend
-│   ├── Hero
-│   ├── Menu
-│   ├── About
-│   ├── Experience
-│   └── Contact
-│
-└── Backend
-    ├── Database
-    ├── Menu management
-    ├── Reservations
-    ├── Admin login
-    └── Reservation management
