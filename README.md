@@ -10,21 +10,21 @@ The website is designed to feel elegant, calm and premium while keeping the user
 
 ---
 
-## ✨ Features
+##  Features
 
-* 🍣 Modern sushi restaurant menu
-* 🥢 Signature dishes and sushi collections
-* 📖 Restaurant information
-* 📅 Table reservation system
-* 📱 Responsive design
-* ✨ Smooth animations and interactions
-* 🛒 Online ordering *(if implemented)*
-* 🔐 Admin dashboard *(if implemented)*
-* 🗄️ Database integration *(if implemented)*
+*  Modern sushi restaurant menu
+*  Signature dishes and sushi collections
+*  Restaurant information
+*  Table reservation system
+*  Responsive design
+*  Smooth animations and interactions
+*  Online ordering 
+*  Admin dashboard 
+*  Database integration 
 
 ---
 
-## 🎨 Design
+##  Design
 
 The design combines **modern Japanese aesthetics** with a high-end restaurant feel.
 
@@ -47,7 +47,7 @@ The website uses large food photography, generous spacing, subtle animations and
 
 ---
 
-## 🖥️ Pages
+##  Pages
 
 ### Home
 
@@ -75,7 +75,7 @@ Restaurant location, opening hours and contact information.
 
 ---
 
-## 🛠️ Technologies
+##  Technologies
 
 This project is built using:
 
@@ -93,9 +93,8 @@ Additional libraries and tools:
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
-```text
 Koi/
 │
 ├── assets/
@@ -124,13 +123,12 @@ Koi/
 │   └── database.sql
 │
 └── README.md
-```
 
 > Update the structure above to match the actual project structure.
 
 ---
 
-## 🗄️ Database
+##  Database
 
 The website can use a MySQL database to store information such as:
 
@@ -142,7 +140,6 @@ The website can use a MySQL database to store information such as:
 
 Example database structure:
 
-```text
 users
 ├── id
 ├── name
@@ -164,54 +161,10 @@ reservations
 ├── date
 ├── time
 └── guests
-```
 
 ---
 
-## 🚀 Installation
-
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/yourusername/koi.git
-```
-
-### 2. Move the project
-
-Place the project inside your local server directory, for example:
-
-```text
-xampp/htdocs/koi
-```
-
-### 3. Create the database
-
-Create a MySQL database and import:
-
-```text
-database/database.sql
-```
-
-### 4. Configure the database
-
-Update the database connection settings in the project's configuration file.
-
-### 5. Start the server
-
-Start:
-
-* Apache
-* MySQL
-
-Then open:
-
-```text
-http://localhost/koi
-```
-
----
-
-## 🎯 Project Goals
+##  Project Goals
 
 The main goal of KŌI is to create a professional restaurant website that demonstrates both **front-end design** and **back-end development** skills.
 
@@ -224,91 +177,8 @@ The project focuses on:
 * User interaction
 * Form validation
 * CRUD functionality
-* Creating a realistic business website
 
----
-
-## 📸 Screenshots
-
-### Homepage
-
-*Add screenshot here*
-
-### Menu
-
-*Add screenshot here*
-
-### Reservation
-
-*Add screenshot here*
-
----
-
-## 🔮 Future Improvements
-
-Possible future additions include:
-
-* [ ] Online payment system
-* [ ] Customer accounts
-* [ ] Admin dashboard
-* [ ] Reservation management
-* [ ] Online ordering
-* [ ] Order tracking
-* [ ] Email confirmation
-* [ ] Japanese/English language switch
-* [ ] Dark/light theme
-* [ ] Customer reviews
-
----
-
-## 👩‍💻 Author
-
-**Ava**
-
-MBO Webdevelopment — Level 4
-
-This project was created as a webdevelopment portfolio/project piece.
-
----
-
-## 📄 License
-
-This project was created for educational and portfolio purposes.
-
-
-┌─────────────────────────────────┐
-│ KŌI     MENU ABOUT EXPERIENCE   │
-│                         RESERVE │
-├─────────────────────────────────┤
-│                                 │
-│             KŌI                 │
-│   Japanese dining, reimagined.  │
-│                                 │
-│       [ VIEW MENU ]             │
-│                                 │
-├─────────────────────────────────┤
-│          OUR MENU               │
-│                                 │
-│  Sushi     Sashimi     Rolls     │
-│                                 │
-├─────────────────────────────────┤
-│                                 │
-│       A TASTE OF JAPAN          │
-│       About the restaurant      │
-│                                 │
-├─────────────────────────────────┤
-│                                 │
-│       THE KŌI EXPERIENCE        │
-│                                 │
-├─────────────────────────────────┤
-│                                 │
-│       RESERVE A TABLE           │
-│       [ reservation form ]      │
-│                                 │
-├─────────────────────────────────┤
-│          CONTACT                │
-│     Opening hours / location    │
-└─────────────────────────────────┘
+--
 
 KŌI
 │
