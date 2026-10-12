@@ -449,21 +449,21 @@ require __DIR__ . '/admin-header.php';
                         </td>
                         <td><?= (int) $reservation['guests'] ?></td>
                         <td class="admin-message-cell"><?= nl2br(admin_escape($reservation['message'])) ?></td>
-                        <td>
-                            <form method="post" action="admin.php#reservations" onsubmit="return confirm('Delete this reservation?')">
-                                <input type="hidden" name="csrf_token" value="<?= admin_escape(admin_csrf_token()) ?>">
-                                <input type="hidden" name="action" value="delete_reservation">
-                                <input type="hidden" name="id" value="<?= (int) $reservation['id'] ?>">
-                                <button class="admin-danger-link" type="submit">
-                                    Delete
-                                </button>
-                            </form>
+                        <td class="admin-row-actions">
                             <form method="post" action="admin.php#reservations">
                                 <input type="hidden" name="csrf_token" value="<?= admin_escape(admin_csrf_token()) ?>">
                                 <input type="hidden" name="action" value="edit_reservation">
                                 <input type="hidden" name="id" value="<?= (int) $reservation['id'] ?>">
                                 <button class="admin-text-link" type="submit" style="padding:0; border:0; background:none; font:inherit; cursor:pointer;">
                                     Edit
+                                </button>
+                            </form>
+                            <form method="post" action="admin.php#reservations" onsubmit="return confirm('Delete this reservation?')">
+                                <input type="hidden" name="csrf_token" value="<?= admin_escape(admin_csrf_token()) ?>">
+                                <input type="hidden" name="action" value="delete_reservation">
+                                <input type="hidden" name="id" value="<?= (int) $reservation['id'] ?>">
+                                <button class="admin-danger-link" type="submit">
+                                    Delete
                                 </button>
                             </form>
                         </td>
