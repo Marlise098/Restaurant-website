@@ -1,6 +1,5 @@
 <?php
 
-
 $isDocker = in_array(
     gethostname(),
     ['apache.container', 'fpm.container'],
@@ -25,7 +24,6 @@ if ($isDocker) {
     $username = 'u250404_gluwebsite';
     $password = 'R@@mweg3';
 }
-
 
 try {
     $pdo = new PDO(

@@ -1,7 +1,8 @@
 
 <?php
-require_once "includes/dbh.inc.php";
+require_once __DIR__ . '/includes/dbh.inc.php';
 
+// Both forms post to the same page; only handle contact submissions here.
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["form_type"]) && $_POST["form_type"] === "contact") {
 
     $name = $_POST["name"];
@@ -57,4 +58,3 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["form_type"]) && $_POS
     </form>
 
 </div>
-
