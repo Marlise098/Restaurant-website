@@ -1,50 +1,53 @@
 <?php
 
-function admin_upload_image(array $file): array
+function admin_upload_image(array $uploadedFile): array
 {
-    if ($file['error'] === UPLOAD_ERR_NO_FILE) {
+    // Geen bestand gekozen? Dan hoeft er niets te worden opgeslagen.
+    if ($uploadedFile['error'] === UPLOAD_ERR_NO_FILE) {
         return ['image' => '', 'error' => ''];
     }
 
-    if ($file['error'] !== UPLOAD_ERR_OK) {
+    if ($uploadedFile['error'] !== UPLOAD_ERR_OK) {
         return ['image' => '', 'error' => 'The uploaded image could not be processed. Please try again.'];
     }
 
-    $uploadDir = dirname(__DIR__) . '/images';
-    if (!is_dir($uploadDir)) {
-        mkdir($uploadDir, 0777, true);
+    // Ga twee mappen omhoog naar de images-map van de website.
+    $uploadDirectory = dirname(__DIR__, 2) . '/images';
+    if (!is_dir($uploadDirectory) && !mkdir($uploadDirectory, 0755, true) && !is_dir($uploadDirectory)) {
+        return ['image' => '', 'error' => 'The image folder could not be created.'];
     }
 
-    // Check the file contents rather than trusting its name.
+    // Controleer het echte bestandstype; een bestandsnaam kan misleidend zijn.
     $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
-    $fileMimeType = @mime_content_type($file['tmp_name']) ?: '';
+    $detectedMimeType = @mime_content_type($uploadedFile['tmp_name']) ?: '';
 
-    if (!in_array($fileMimeType, $allowedMimeTypes, true)) {
+    if (!in_array($detectedMimeType, $allowedMimeTypes, true)) {
         return ['image' => '', 'error' => 'Please upload a valid image file (JPG, PNG, WEBP, or GIF).'];
     }
 
-    $originalName = pathinfo($file['name'], PATHINFO_FILENAME);
-    $safeBaseName = preg_replace('/[^A-Za-z0-9_-]+/', '-', $originalName);
-    $safeBaseName = trim((string) $safeBaseName, '-');
-    $safeBaseName = $safeBaseName !== '' ? $safeBaseName : 'dish';
+    // Haal de extensie weg en vervang ongeschikte tekens door een streepje.
+    $originalFilename = pathinfo($uploadedFile['name'], PATHINFO_FILENAME);
+    $safeFilename = preg_replace('/[^A-Za-z0-9_-]+/', '-', $originalFilename);
+    $safeFilename = trim((string) $safeFilename, '-');
+    $safeFilename = $safeFilename !== '' ? $safeFilename : 'dish';
 
-    $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-    if ($extension === '') {
-        $extension = match ($fileMimeType) {
-            'image/jpeg' => 'jpg',
-            'image/png' => 'png',
-            'image/webp' => 'webp',
-            'image/gif' => 'gif',
-            default => 'jpg',
-        };
-    }
+    // Kies de extensie die bij het echte afbeeldingstype hoort.
+    $extension = match ($detectedMimeType) {
+        'image/jpeg' => 'jpg',
+        'image/png' => 'png',
+        'image/webp' => 'webp',
+        'image/gif' => 'gif',
+        default => 'jpg',
+    };
 
-    $image = $safeBaseName . '-' . time() . '.' . $extension;
-    $targetPath = $uploadDir . '/' . $image;
+    // Voeg een willekeurige code toe zodat uploads elkaar niet overschrijven.
+    $imageFilename = substr($safeFilename, 0, 100) . '-' . bin2hex(random_bytes(8)) . '.' . $extension;
+    $destinationPath = $uploadDirectory . '/' . $imageFilename;
 
-    if (!move_uploaded_file($file['tmp_name'], $targetPath)) {
+    // Verplaats het tijdelijke uploadbestand naar de images-map.
+    if (!move_uploaded_file($uploadedFile['tmp_name'], $destinationPath)) {
         return ['image' => '', 'error' => 'The image upload failed. Please try again.'];
     }
 
-    return ['image' => $image, 'error' => ''];
+    return ['image' => $imageFilename, 'error' => ''];
 }

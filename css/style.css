@@ -9,6 +9,124 @@ html {
     scroll-behavior: smooth;
 }
 
+/* Menu details share the restaurant's dark palette and olive accents. */
+.menu-detail-link {
+    display: inline-block;
+    margin-top: 20px;
+    color: #7A8065;
+    font: bold 14px Arial, sans-serif;
+    text-underline-offset: 5px;
+}
+
+.menu-detail-link:hover {
+    color: #F4F0E8;
+}
+
+.dish-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.dish-main {
+    width: min(1200px, 84%);
+    margin: 130px auto 80px;
+    flex: 1;
+}
+
+.dish-back {
+    margin: 0 0 35px;
+}
+
+.dish-detail {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: #151515;
+    border: 1px solid #252525;
+}
+
+.dish-image {
+    width: 100%;
+    height: 100%;
+    min-height: 420px;
+    object-fit: cover;
+}
+
+.dish-content {
+    padding: 55px 45px;
+    align-self: center;
+    font-family: Arial, sans-serif;
+    color: #F4F0E8;
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.dish-content h1 {
+    margin: 20px 0;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 400;
+}
+
+.dish-description {
+    color: #A7A7A7;
+    line-height: 1.9;
+}
+
+.dish-price {
+    margin: 30px 0;
+    font-size: 1.5rem;
+}
+
+.dish-reserve {
+    display: inline-block;
+    padding: 15px 25px;
+    background: #7A8065;
+    color: #0D0D0D;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.dish-reserve:hover {
+    background: #F4F0E8;
+}
+
+.dish-empty {
+    border: 1px solid #252525;
+    background: #151515;
+}
+
+@media (max-width: 700px) {
+    .dish-detail {
+        grid-template-columns: 1fr;
+    }
+
+    .dish-image {
+        height: 300px;
+        min-height: 0;
+    }
+
+    .dish-content {
+        padding: 30px 25px;
+    }
+
+    .dish-page .Header-content {
+        position: static;
+        flex-wrap: wrap;
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .dish-page .Header-nav ul {
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .dish-main {
+        width: 90%;
+        margin: 35px auto 50px;
+    }
+}
+
 body {
     background-color: #0D0D0D;
     color: #fff;

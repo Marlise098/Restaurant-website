@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     if ($id > 0) {
                         $currentImage = trim((string) ($_POST['existing_image'] ?? ''));
                         if ($currentImage !== '' && $currentImage !== $values['image']) {
-                            $oldImagePath = dirname(__DIR__) . '/images/' . $currentImage;
+                            $oldImagePath = dirname(__DIR__, 2) . '/images/' . basename($currentImage);
                             if (file_exists($oldImagePath)) {
                                 unlink($oldImagePath);
                             }
@@ -279,6 +279,9 @@ require __DIR__ . '/admin-header.php';
                             </span>
                         </td>
                         <td class="admin-row-actions">
+                            <?php if ($item['available']): ?>
+                                <a class="admin-text-link" href="../menu-detail.php?id=<?= (int) $item['id'] ?>">View</a>
+                            <?php endif; ?>
                             <a class="admin-text-link" href="?edit=<?= (int) $item['id'] ?>#menu">
                                 Edit
                             </a>
