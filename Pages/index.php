@@ -7,26 +7,48 @@
     <link rel="icon" href="../images/Koi Logo.png" type="image/x-icon">
     <title>Restaurant HomePage</title>
 </head>
-<body id="index">
-    <?php
-    // Share one database connection across the menu and forms.
-    require_once __DIR__ . '/includes/dbh.inc.php';
+<body>
 
-    include __DIR__ . '/header.php';
-    include __DIR__ . '/hero.php';
-    include __DIR__ . '/menu.php';
-    include __DIR__ . '/about.php';
-    include __DIR__ . '/reservation.php';
-    include __DIR__ . '/contact.php';
+ <?php
+  
+    // Include the database connection file
+    include 'includes/dbh.inc.php';
+?>
+    <!-- Include the header.php file -->
+    <?php
+      include 'header.php';
     ?>
-<<<<<<< Updated upstream
+    <!-- Include the hero.php file -->
+    <?php
+      include 'hero.php';
+    ?>
+
+    <!-- Include the menu.php file -->
+    <?php
+      include 'menu.php';
+    ?>
+
+    <!-- Include the about.php file -->
+    <?php
+      include 'about.php';
+    ?>
+
+    <!-- Include the reservation.php file -->
+    <?php
+      include 'reservation.php';
+    ?>
+
+    <!-- Include the contact.php file -->
+    <?php
+      include 'contact.php';
+    ?>
 
     <!-- Include the footer.php file -->
     <?php
       include 'footer.php';
     ?>
-=======
-    <script src="../js/script.js"></script>
->>>>>>> Stashed changes
 </body>
+
+ <script src="../js/script.js"></script>
+
 </html>

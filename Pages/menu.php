@@ -1,11 +1,7 @@
 <?php
 
-<<<<<<< Updated upstream
 require_once "includes/dbh.inc.php";
 
-=======
-// Show only dishes currently available, in their database order.
->>>>>>> Stashed changes
 $stmt = $pdo->query("
     SELECT *
     FROM menu
@@ -60,3 +56,5 @@ $menuItems = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 
 </div>
+
+
