@@ -26,7 +26,7 @@
                placeholder="Number of guests" required>
     </div>
 
-    <div class="form-group">
+    <div class="form-group form-group-message">
         <textarea name="message" placeholder="Message"></textarea>
     </div>
 
@@ -38,9 +38,10 @@
 
 <?php
 
-require_once "includes/dbh.inc.php";
+require_once __DIR__ . '/includes/dbh.inc.php';
 $message = "";
 
+// Both forms post to the same page; handle only this form.
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["form_type"]) && $_POST["form_type"] === "reservation") {
 
     $name = $_POST["name"];

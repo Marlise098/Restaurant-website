@@ -7,6 +7,7 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
 
 require_once __DIR__ . '/../includes/dbh.inc.php';
 
+// Create the admin account table on first use.
 $pdo->exec(
     'CREATE TABLE IF NOT EXISTS admin_users (
         id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -21,6 +22,7 @@ function admin_escape($value): string
     return htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8');
 }
 
+// Keep a random form token in the session to verify admin submissions.
 function admin_csrf_token(): string
 {
     if (empty($_SESSION['admin_csrf'])) {

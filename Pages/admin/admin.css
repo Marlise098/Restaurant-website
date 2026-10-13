@@ -66,6 +66,7 @@
 }
 
 .admin-logout,
+button.admin-text-link,
 .admin-danger-link {
     padding: 0;
     border: 0;

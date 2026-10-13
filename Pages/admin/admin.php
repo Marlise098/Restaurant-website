@@ -1,14 +1,14 @@
 <?php
 // Authentication
-require_once 'admin-auth.php';
-require_once '../includes/upload.inc.php';
+require_once __DIR__ . '/admin-auth.php';
+require_once __DIR__ . '/../includes/upload.inc.php';
 admin_require_login();
 
 $error = '';
 $editItem = null;
 $editingReservation = null;
 
-//  Process submitted forms
+// Check the session token before changing restaurant records.
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!admin_verify_csrf()) {
         $error = 'Your session expired. Please try again.';
@@ -141,8 +141,7 @@ $menuItems = $pdo->query('SELECT id, name, description, category, price, image, 
 $messages = $pdo->query('SELECT id, name, email, message FROM contact ORDER BY id DESC')->fetchAll(PDO::FETCH_ASSOC);
 $reservations = $pdo->query('SELECT id, name, email, phone, reservation_date, reservation_time, guests, message FROM reservations ORDER BY reservation_date DESC, reservation_time DESC')->fetchAll(PDO::FETCH_ASSOC);
 
-//  Display the admin page
-$activePage = 'dashboard';
+// Load the records displayed in the dashboard.
 $pageTitle = 'Admin panel';
 require __DIR__ . '/admin-header.php';
 ?>
@@ -454,7 +453,7 @@ require __DIR__ . '/admin-header.php';
                                 <input type="hidden" name="csrf_token" value="<?= admin_escape(admin_csrf_token()) ?>">
                                 <input type="hidden" name="action" value="edit_reservation">
                                 <input type="hidden" name="id" value="<?= (int) $reservation['id'] ?>">
-                                <button class="admin-text-link" type="submit" style="padding:0; border:0; background:none; font:inherit; cursor:pointer;">
+                                <button class="admin-text-link" type="submit" >
                                     Edit
                                 </button>
                             </form>
@@ -479,6 +478,6 @@ require __DIR__ . '/admin-header.php';
     </div>
 </section>
 </main>
-<?php require __DIR__ . '../../footer.php'; ?>
+<?php require __DIR__ . '/../footer.php'; ?>
 </body>
 </html>

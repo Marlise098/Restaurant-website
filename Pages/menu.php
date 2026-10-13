@@ -1,7 +1,8 @@
 <?php
 
-require_once "includes/dbh.inc.php";
+require_once __DIR__ . '/includes/dbh.inc.php';
 
+// Show only dishes currently available.
 $stmt = $pdo->query("
     SELECT *
     FROM menu
@@ -56,5 +57,3 @@ $menuItems = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 
 </div>
-
-

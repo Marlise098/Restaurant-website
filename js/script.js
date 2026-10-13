@@ -1,4 +1,4 @@
-// The option to select specific menu options
+// Filter the displayed dishes by the selected menu category.
 
 document.addEventListener('DOMContentLoaded', function() {
     const filterButtons = document.querySelectorAll('.filter-btn');
@@ -6,13 +6,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     filterButtons.forEach(button => {
         button.addEventListener('click', () => {
-            // Remove active class from all buttons
+            // Keep only the selected button active.
             filterButtons.forEach(btn => btn.classList.remove('active'));
-            // Add active class to clicked button
             button.classList.add('active');
 
             const filterValue = button.getAttribute('data-filter');
 
+            // The "all" filter shows every dish.
             menuCards.forEach(card => {
                 if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
                     card.style.display = 'block';

@@ -6,9 +6,11 @@ if (!empty($_SESSION['admin_id'])) {
     exit;
 }
 
+// Registration is available only until the first admin account exists.
 $adminCount = (int) $pdo->query('SELECT COUNT(*) FROM admin_users')->fetchColumn();
 $error = '';
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && $adminCount === 0) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && // Registration is available only until the first admin account exists.
+$adminCount === 0) {
     $username = trim((string) ($_POST['username'] ?? ''));
     $password = (string) ($_POST['password'] ?? '');
     $confirmPassword = (string) ($_POST['confirm_password'] ?? '');

@@ -1,6 +1,6 @@
 <?php
 
-
+// Select the connection settings for Docker, XAMPP, or live hosting.
 $isDocker = in_array(
     gethostname(),
     ['apache.container', 'fpm.container'],
@@ -26,18 +26,18 @@ if ($isDocker) {
     $password = 'R@@mweg3';
 }
 
-
 try {
     $pdo = new PDO(
         "mysql:host=$host;dbname=$dbname;charset=utf8mb4",
         $username,
         $password,
         [
+            // Throw exceptions and use native prepared statements.
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_EMULATE_PREPARES => false,
         ]
     );
-}   catch (PDOException $e) {
+} catch (PDOException $e) {
     error_log($e->getMessage());
     exit('De databaseverbinding is mislukt.');
 }

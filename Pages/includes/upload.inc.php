@@ -15,6 +15,7 @@ function admin_upload_image(array $file): array
         mkdir($uploadDir, 0777, true);
     }
 
+    // Check the file contents rather than trusting its name.
     $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
     $fileMimeType = @mime_content_type($file['tmp_name']) ?: '';
 

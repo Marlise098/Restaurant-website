@@ -1,6 +1,5 @@
 <?php
 admin_require_login();
-$activePage = $activePage ?? 'dashboard';
 $pageTitle = $pageTitle ?? 'Admin';
 ?>
 <!DOCTYPE html>
