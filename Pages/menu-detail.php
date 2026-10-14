@@ -1,21 +1,16 @@
 <?php
 require_once __DIR__ . '/includes/dbh.inc.php';
 
-// Lees het gerecht-id uit de URL, bijvoorbeeld menu-detail.php?id=3.
+// Lees het gerecht-id uit de URL
 // Alleen positieve gehele getallen zijn geldig.
 $menuItemId = filter_var($_GET['id'] ?? null, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
 $menuItem = false;
 
-// Haal alleen een beschikbaar gerecht op; verborgen gerechten blijven verborgen.
+// Haal alleen een beschikbaar gerecht op
 if ($menuItemId !== false && $menuItemId !== null) {
     $menuQuery = $pdo->prepare('SELECT name, description, price, category, image FROM menu WHERE id = :id AND available = 1');
     $menuQuery->execute(['id' => $menuItemId]);
     $menuItem = $menuQuery->fetch(PDO::FETCH_ASSOC);
-}
-
-// Geef een 404-status als het gerecht niet bestaat of niet beschikbaar is.
-if (!$menuItem) {
-    http_response_code(404);
 }
 
 $pageTitle = $menuItem ? $menuItem['name'] : 'Dish not found';
