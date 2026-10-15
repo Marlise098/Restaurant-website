@@ -49,11 +49,15 @@ $menuItems = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                        €<?= number_format($item['price'], 2, ',', '.') ?>
                     </span>
-                    <a class="menu-detail-link" href="menu-detail.php?id=<?= (int) $item['id'] ?>">View dish &rarr;</a>
+                    <div class="menu-card-actions">
+                        <a class="menu-detail-btn" href="menu-detail.php?id=<?= (int) $item['id'] ?>">View Dish &rarr;</a>
+                    </div>
                 </div>
-
             </div>
+
         <?php endforeach; ?>
+
+
 
     </div>
 

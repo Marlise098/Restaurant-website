@@ -85,7 +85,7 @@ CREATE TABLE `menu` (
 INSERT INTO `menu` (`id`, `name`, `description`, `price`, `category`, `image`, `available`) VALUES
 (1, 'Salmon Nigiri', 'Fresh salmon served over seasoned sushi rice.', 4.50, 'Nigiri', 'Nigiri.jpg', 1),
 (2, 'Tuna Nigiri', 'Premium tuna with perfectly seasoned sushi rice.', 5.00, 'Nigiri', 'tuna.jpg', 1),
-(3, 'KOI signature roll', 'Salmon, avocado sesame and our signature sauce', 14.50, 'Sushi', 'Sushi-roll.jpg', 1),
+(3, 'KOI signature roll', 'Salmon, avocado sesame and our signature sauce', 14.50, 'Sushi', 'Sushi-Roll.jpg', 1),
 (4, 'Black Dragon', 'Tempura shrimp, avocado and a rich unagi glaze.', 16.00, 'Sushi', 'Dragon.jpg', 1),
 (5, 'Salmon Sashimi', 'Delicate slices of fresh premium salmon.', 12.00, 'Sashimi', 'Sashimi.jpg', 1),
 (6, 'Sashimi Selection', 'A selection of the chef\'s finest fish of the day.', 22.00, 'Sashimi', 'Selection.jpg', 1);

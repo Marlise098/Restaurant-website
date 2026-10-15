@@ -22,6 +22,27 @@ html {
     color: #F4F0E8;
 }
 
+.menu-card-actions {
+    margin-top: 20px;
+}
+
+.menu-detail-btn {
+    display: inline-block;
+    padding: 12px 20px;
+    background: #7A8065;
+    color: #0D0D0D;
+    font: bold 14px Arial, sans-serif;
+    text-decoration: none;
+}
+
+.menu-detail-btn:hover,
+.menu-detail-btn:focus-visible {
+    background: #7A8065;
+    color: #0D0D0D;
+    outline: 2px solid #F4F0E8;
+    outline-offset: 3px;
+}
+
 .dish-page {
     min-height: 100vh;
     display: flex;

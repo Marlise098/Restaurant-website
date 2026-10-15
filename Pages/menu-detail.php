@@ -14,6 +14,23 @@ if ($menuItemId !== false && $menuItemId !== null) {
 }
 
 $pageTitle = $menuItem ? $menuItem['name'] : 'Dish not found';
+if (!$menuItem) {
+    http_response_code(404);
+}
+
+$imageFilename = $menuItem ? basename($menuItem['image']) : '';
+$imageDirectory = dirname(__DIR__) . '/images/';
+if ($imageFilename !== '' && !is_file($imageDirectory . $imageFilename)) {
+    foreach (scandir($imageDirectory) as $filename) {
+        if (strcasecmp($filename, $imageFilename) === 0 && is_file($imageDirectory . $filename)) {
+            $imageFilename = $filename;
+            break;
+        }
+    }
+}
+if ($imageFilename === '' || !is_file($imageDirectory . $imageFilename)) {
+    $imageFilename = 'Sushi-about.jpg';
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -31,7 +48,7 @@ $pageTitle = $menuItem ? $menuItem['name'] : 'Dish not found';
         <?php if ($menuItem): ?>
             <article class="dish-detail fade-in">
                 <img class="dish-image"
-                     src="../images/<?= htmlspecialchars(rawurlencode(basename($menuItem['image']))) ?>"
+                     src="../images/<?= htmlspecialchars(rawurlencode($imageFilename)) ?>"
                      alt="<?= htmlspecialchars($menuItem['name']) ?>">
                 <div class="dish-content">
                     <p class="menu-label"><?= htmlspecialchars($menuItem['category']) ?></p>
