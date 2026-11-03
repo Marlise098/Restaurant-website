@@ -47,8 +47,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["form_type"]) && $_POS
     $name = $_POST["name"];
     $email = $_POST["email"];
     $phone = $_POST["phone"];
-    $reservation_date = $_POST["reservation_date"];
-    $reservation_time = $_POST["reservation_time"];
+    $reservationDate = $_POST["reservation_date"];
+    $reservationTime = $_POST["reservation_time"];
     $guests = $_POST["guests"];
     $message = $_POST["message"];
 
@@ -63,8 +63,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["form_type"]) && $_POS
         ":name" => $name,
         ":email" => $email,
         ":phone" => $phone,
-        ":reservation_date" => $reservation_date,
-        ":reservation_time" => $reservation_time,
+        ":reservation_date" => $reservationDate,
+        ":reservation_time" => $reservationTime,
         ":guests" => $guests,
         ":message" => $message
     ]);

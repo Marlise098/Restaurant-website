@@ -9,26 +9,26 @@ $isDocker = in_array(
 if ($isDocker) {
     // Lokaal in Docker
     $host = 'mysql_db';
-    $dbname = 'reservations';
+    $databaseName = 'reservations';
     $username = 'root';
     $password = 'root';
 } elseif (PHP_OS_FAMILY === 'Windows') {
     // Lokaal in XAMPP
     $host = 'localhost';
-    $dbname = 'reservations';
+    $databaseName = 'reservations';
     $username = 'root';
     $password = 'root';
 } else {
     // Live hosting
     $host = 'localhost'; 
-    $dbname = 'u250404_gluwebsite';
+    $databaseName = 'u250404_gluwebsite';
     $username = 'u250404_gluwebsite';
     $password = 'R@@mweg3';
 }
 
 try {
     $pdo = new PDO(
-        "mysql:host=$host;dbname=$dbname;charset=utf8mb4",
+        "mysql:host=$host;dbname=$databaseName;charset=utf8mb4",
         $username,
         $password,
         [
